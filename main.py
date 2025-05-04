@@ -1,6 +1,6 @@
 """
 projekt_1.py: první projekt do Engeto Online Python Akademie
-jj
+
 author: Natálie Zýková
 email: natalie.zykova@seznam.cz
 """
