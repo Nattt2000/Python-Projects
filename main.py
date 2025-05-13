@@ -38,13 +38,13 @@ slovnik_registrovanych = {"bob": "123", "ann": "pass123", "mike": "password123",
 
 username = input("username: ")
 password = input("password: ")
-cislo_textu = int(input("text number: "))
+
 
 if slovnik_registrovanych.get(username) == password:
     print("----------------------------------------")
     print(f"Welcome to the app, {username}. \nWe have 3 texts to be analyzed.")
     print("----------------------------------------")
-    print(f"Enter a number btw. 1 and 3 to select: {cislo_textu}")
+    cislo_textu = int(input("Enter a number btw. 1 and 3 to select: "))
     print("----------------------------------------")
     
     if not cislo_textu in range(4):
