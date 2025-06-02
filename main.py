@@ -38,84 +38,73 @@ slovnik_registrovanych = {"bob": "123", "ann": "pass123", "mike": "password123",
 
 username = input("username: ")
 password = input("password: ")
-
+pocet_textu = len(TEXTS)
+oddelovac = "----------------------------------------"
 
 if slovnik_registrovanych.get(username) == password:
-    print("----------------------------------------")
-    print(f"Welcome to the app, {username}. \nWe have 3 texts to be analyzed.")
-    print("----------------------------------------")
-    cislo_textu = int(input("Enter a number btw. 1 and 3 to select: "))
-    print("----------------------------------------")
+    print(oddelovac)
+    print(f"Welcome to the app, {username}. \nWe have {pocet_textu} texts to be analyzed.")
+    print(oddelovac)
     
-    if not cislo_textu in range(4):
+    
+    try:
+        cislo_textu = int(input(f"Enter a number btw. 1 and {pocet_textu} to select: "))
+    except ValueError:
         print("wrong number, terminating the program..")
     else:
-        vybrany_text = TEXTS[cislo_textu - 1]
-        soucet_slov = len(vybrany_text.split())
-        print(f"There are {soucet_slov} words in the selected text.")
-        
-        soucet_title = 0
-        for slovo in vybrany_text.split():
-            if slovo.istitle():
-                soucet_title += 1
-        print(f"There are {soucet_title} titlecase words.")
+        if not cislo_textu in range(1, pocet_textu + 1):
+            print("wrong number, terminating the program..")
+        else:
+            print(oddelovac)
+            vybrany_text = TEXTS[cislo_textu - 1]
+            soucet_slov = len(vybrany_text.split())
+            print(f"There are {soucet_slov} words in the selected text.")
+            
+            soucet_title = 0
+            soucet_upper = 0
+            soucet_lower = 0
+            pocet_cisel = 0
+            soucet_cisel = 0
+            
+            for znak in vybrany_text.split():
+                if znak.istitle():
+                    soucet_title += 1
+                
+                if znak.isupper():
+                    soucet_upper += 1
 
-        soucet_upper = 0
-        for slovo in vybrany_text.split():
-            if slovo.isupper():
-                soucet_upper += 1
-        print(f"There are {soucet_upper} uppercase words.")
+                if znak.islower():
+                    soucet_lower += 1
 
-        soucet_lower = 0
-        for slovo in vybrany_text.split():
-            if slovo.islower():
-                soucet_lower += 1
-        print(f"There are {soucet_lower} lowercase words.")
+                if znak.isdigit():
+                    znak = znak.strip(string.punctuation)
+                    pocet_cisel += 1
+                    soucet_cisel += int(znak)      
 
-        pocet_cisel = 0
-        for znak in vybrany_text.split():
-            if znak.isdigit():
-                znak = znak.strip(string.punctuation)
-                pocet_cisel += 1
-        print(f"There are {pocet_cisel} numeric strings.")
+            print(f"There are {soucet_title} titlecase words.")
+            print(f"There are {soucet_upper} uppercase words.")
+            print(f"There are {soucet_lower} lowercase words.")
+            print(f"There are {pocet_cisel} numeric strings.")
+            print(f"The sum of all the numbers {soucet_cisel}")
+            
+            print(oddelovac)
 
-        soucet_cisel = 0
-        for znak in vybrany_text.split():
-            if znak.isdigit():
-                znak = znak.strip(string.punctuation)
-                soucet_cisel += int(znak)
-        print(f"The sum of all the numbers {soucet_cisel}")
-        print("----------------------------------------")
+            print("LEN|  OCCURENCES  |NR.")
+            print(oddelovac)
 
-        print("LEN|  OCCURENCES  |NR.")
-        print("----------------------------------------")
-        
-
-        pocty = []
-        for i in range(1, 15):
-            ipismena_slova = []
+            cetnosti = dict()
             for slovo in vybrany_text.split():
                 slovo_bez = slovo.strip(string.punctuation)
-                if len(slovo_bez) == i:
-                    ipismena_slova.append(slovo_bez)
-            pocet_slov = len(ipismena_slova)
-            pocty.append(pocet_slov)
-        maximum = max(pocty)
-
-
-        for index in range(len(pocty)):
-            if pocty[index] == 0:
-                continue
-            else:
-                if index < 9:
-                    mod_index = f" {index + 1}"
+                delka_slova = len(slovo_bez)
+                if delka_slova in cetnosti:
+                    cetnosti[delka_slova] += 1
                 else:
-                    mod_index = index + 1
-                pocet_hvezdicek = "*" * pocty[index]
-                koef = maximum - pocty[index]
-                pocet_mezer = " " * koef
-            print(mod_index, "|", pocet_hvezdicek, pocet_mezer, "|", pocty[index])
-
+                    cetnosti[delka_slova] = 1
+            
+            maximum = max(cetnosti.values())
+            for klic, hodnota in sorted(cetnosti.items()):
+                pocet_hvezdicek = "*" * hodnota
+                print(f"{klic:>2}|{pocet_hvezdicek:<{maximum + 5}}|{hodnota}")
 
 else:
    print("unregistered user, terminating the program..")
