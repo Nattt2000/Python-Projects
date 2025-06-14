@@ -5,6 +5,7 @@ author: Natálie Zýková
 email: natalie.zykova@seznam.cz
 """
 
+
 # vytvoření tajného čísla
 
 import random as rd
