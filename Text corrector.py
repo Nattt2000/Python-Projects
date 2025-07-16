@@ -1,6 +1,8 @@
 """
 text_corrector.py: zápočtový program, MFF UK
 author: Natálie Zýková
+
+Pro spuštění je potřeba mít stažený slovnik.txt ve stejném adresáři.
 """
 
 
